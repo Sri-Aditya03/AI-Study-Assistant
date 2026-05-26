@@ -1,16 +1,20 @@
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-study_prompt = ChatPromptTemplate.from_template(
-     """
-    You are a helpful AI study assistant.
+study_prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """
+            You are a helpful AI study assistant.
+            Explain concepts in beginner-friendly terms.
+            """
+        ),
 
-    Explain the following topic in simple beginner-friendly terms.
+        MessagesPlaceholder(variable_name="chat_history"),
 
-    Topic: {topic}
-
-    Give:
-    1. Simple explanation
-    2. Real-world analogy
-    3. Important points to remember
-    """
+        (
+            "human",
+            "{input}"
+        )
+    ]
 )
